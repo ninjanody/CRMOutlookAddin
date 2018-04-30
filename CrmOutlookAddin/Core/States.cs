@@ -1,0 +1,73 @@
+﻿namespace CrmOutlookAddin.Core
+{
+    /// <summary>
+    /// States a Wrapper object can be in with regard to transmission and synchronisation
+    /// with CRM.
+    /// </summary>
+    public enum States
+    {
+        /// <summary>
+        /// New and as yet unassigned.
+        /// </summary>
+        New,
+
+        /// <summary>
+        /// This is a new Wrapper wrapping an Outlook item which has just been created.
+        /// </summary>
+        NewFromOutlook,
+
+        /// <summary>
+        /// This is a Wrapper representing an outlook item which was present when
+        /// Outlook was started.
+        /// </summary>
+        PresentAtStartup,
+
+        /// <summary>
+        /// This is a Wrapper object representing a outlook item which has just been
+        /// created from a CRM item.
+        /// </summary>
+        NewFromCRM,
+
+        /// <summary>
+        /// A change has been registered on the item wrapped, but we're not clear that
+        /// the edit is completed.
+        /// </summary>
+        Editing,
+
+        /// <summary>
+        /// A change has been registered on the item wrapped and we think it's complete, but it has
+        /// not been transmitted.
+        /// </summary>
+        Pending,
+
+        /// <summary>
+        /// This Wrapper has been queued for transmission but has not yet been
+        /// transmitted.
+        /// </summary>
+        Queued,
+
+        /// <summary>
+        /// The Outlook item associated with this Wrapper has been transmitted,
+        /// but no confirmation has yet been received that it has been accepted.
+        /// </summary>
+        Transmitted,
+
+        /// <summary>
+        /// The Outlook item associated with this Wrapper has been transmitted
+        /// and accepted by CRM.
+        /// </summary>
+        Synced,
+
+        /// <summary>
+        /// A state is put into state PendingDeletion if it is not found in CRM at
+        /// one synchronisation run; if it is not found in the subsequent run and is
+        /// still in state PendingDeletion, then it should be deleted.
+        /// </summary>
+        PendingDeletion,
+
+        /// <summary>
+        /// The Wrapper is in an invalid state and should never be synced.
+        /// </summary>
+        Invalid
+    }
+}
