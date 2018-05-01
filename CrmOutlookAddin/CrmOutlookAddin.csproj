@@ -207,12 +207,16 @@
     <Compile Include="Core\IItemManager.cs" />
     <Compile Include="Core\ItemType.cs" />
     <Compile Include="Core\Scheduler.cs" />
+    <Compile Include="Exceptions\Documentation.cs" />
     <Compile Include="Exceptions\ShouldNotHappenException.cs" />
     <Compile Include="Core\States.cs" />
     <Compile Include="Core\SyncDirection.cs" />
     <Compile Include="Exceptions\ItemNotFoundException.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Transducers\CRMToOutlook\Documentation.cs" />
+    <Compile Include="Transducers\Documentation.cs" />
+    <Compile Include="Utils\Documentation.cs" />
     <Compile Include="Utils\RepeatingProcess.cs" />
     <Compile Include="Utils\RunState.cs" />
     <Compile Include="Utils\StringUtils.cs" />
@@ -243,6 +247,7 @@
     <Compile Include="Wrappers\AbstractItem.cs" />
     <Compile Include="Wrappers\CallItem.cs" />
     <Compile Include="Wrappers\ContactItem.cs" />
+    <Compile Include="Wrappers\Documentation.cs" />
     <Compile Include="Wrappers\EditingWatchdog.cs" />
     <Compile Include="Wrappers\EmailItem.cs" />
     <Compile Include="Wrappers\MeetingItem.cs" />

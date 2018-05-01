@@ -3,6 +3,9 @@
     using System;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
+    /// <summary>
+    /// A wrapper for an Outlook TaskItem.
+    /// </summary>
     public class TaskItem : AbstractItem
     {
         /// <summary>

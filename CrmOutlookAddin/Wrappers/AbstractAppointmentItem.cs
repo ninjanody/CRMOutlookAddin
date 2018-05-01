@@ -4,6 +4,11 @@
     using System.Collections.Generic;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
+    /// <summary>
+    /// Abstract superclass for CallItem and MeetingItem, capturing the commonality of things which, underneath, actually wrap an Outlook.AppointmentItem.
+    /// </summary>
+    /// <see cref="CallItem"/>
+    /// <see cref="MeetingItem"/> 
     public abstract class AbstractAppointmentItem : AbstractItem
     {
         protected Outlook.AppointmentItem item;

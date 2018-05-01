@@ -5,7 +5,12 @@
 
     public class EmailItem : AbstractItem
     {
-        private Outlook.MailItem item;
+        private readonly Outlook.MailItem item;
+
+        public EmailItem(Outlook.MailItem item)
+        {
+            this.item = item;
+        }
 
         public override string Description
         {

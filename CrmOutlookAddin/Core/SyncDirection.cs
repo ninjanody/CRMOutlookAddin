@@ -21,7 +21,7 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-namespace CrmOutlookAddin.BusinessLogic
+namespace CrmOutlookAddin.Core
 {
     /// <summary>
     /// A direction in which things may be synchronised. Directions are named

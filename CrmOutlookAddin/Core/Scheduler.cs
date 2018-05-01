@@ -3,6 +3,9 @@
     using Logging;
     using System;
 
+    /// <summary>
+    /// The single scheduler.
+    /// </summary>
     public class Scheduler
     {
         /// <summary>

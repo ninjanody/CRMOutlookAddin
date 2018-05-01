@@ -5,6 +5,9 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// A wrapper for an Outlook RecipientItem.
+    /// </summary>
     public class RecipientWrapper : AbstractItem
     {
         /// <summary>

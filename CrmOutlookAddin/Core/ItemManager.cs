@@ -13,6 +13,9 @@
     using Utils;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
+    /// <summary>
+    /// The singleton Item Manager, which acts as a factory and broker for wrappers around Outlook items.
+    /// </summary>
     public class ItemManager : IItemManager
     {
         /// <summary>

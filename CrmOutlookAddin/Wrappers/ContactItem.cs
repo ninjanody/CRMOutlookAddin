@@ -3,9 +3,17 @@
     using System;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
+    /// <summary>
+    /// A wrapper for an Outlook ContactItem.
+    /// </summary>
     public class ContactItem : AbstractItem
     {
-        private Outlook.ContactItem item;
+        private readonly Outlook.ContactItem item;
+
+        public ContactItem(Outlook.ContactItem item)
+        {
+            this.item = item;
+        }
 
         public override string Description
         {
