@@ -394,7 +394,7 @@
   </PropertyGroup>
   <Target Name="Doxygen">
     <MakeDir Directories="$(DocDirectory)" />
-    <Exec Command="doxygen.exe $(Doxyfile)" />
+    <Exec Command="doxygen.exe $(Doxyfile)" IgnoreExitCode="true" />
   </Target>
   <Target Name="DoxyClean">
     <RemoveDir Directories="$(DocDirectory)\html" />
