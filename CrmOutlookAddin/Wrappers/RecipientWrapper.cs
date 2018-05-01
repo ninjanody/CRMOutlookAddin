@@ -1,13 +1,20 @@
-﻿using CrmOutlookAddin.Logging;
-using Microsoft.Office.Interop.Outlook;
-using System;
-using System.Collections.Generic;
-
-namespace CrmOutlookAddin.Wrappers
+﻿namespace CrmOutlookAddin.Wrappers
 {
+    using CrmOutlookAddin.Logging;
+    using Microsoft.Office.Interop.Outlook;
+    using System;
+    using System.Collections.Generic;
+
     public class RecipientWrapper : AbstractItem
     {
+        /// <summary>
+        /// A cache of all SMTP addresses we've already established.
+        /// </summary>
         private static Dictionary<Recipient, string> smtpAddressCache = new Dictionary<Recipient, string>();
+
+        /// <summary>
+        /// The actual recipient COM object which I wrap.
+        /// </summary>
         private Recipient recipient;
 
         public RecipientWrapper(Recipient recipient)
@@ -23,6 +30,14 @@ namespace CrmOutlookAddin.Wrappers
             }
         }
 
+        public override string DistinctFields
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public string Name
         {
             get
@@ -31,6 +46,17 @@ namespace CrmOutlookAddin.Wrappers
             }
         }
 
+        public override string OutlookId
+        {
+            get
+            {
+                return recipient.EntryID;
+            }
+        }
+
+        /// <summary>
+        /// Return the SMTP address of this recipient, from the cache if possible.
+        /// </summary>
         public string SMTPAddress
         {
             get
@@ -65,7 +91,7 @@ namespace CrmOutlookAddin.Wrappers
 
                     if (!string.IsNullOrEmpty(result))
                     {
-                        smtpAddressCache[recipient] = result;
+                        RecipientWrapper.smtpAddressCache[recipient] = result;
                     }
                 }
 

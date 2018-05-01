@@ -1,10 +1,10 @@
-﻿using CrmOutlookAddin.Core;
-using CrmOutlookAddin.Exceptions;
-using NUnit.Framework;
-using System;
-
-namespace CrmOutlookAddin.Wrappers.Tests
+﻿namespace CrmOutlookAddin.Wrappers.Tests
 {
+    using CrmOutlookAddin.Core;
+    using CrmOutlookAddin.Exceptions;
+    using NUnit.Framework;
+    using System;
+
     [TestFixture()]
     public class StateTransitionEngineTests
     {
@@ -521,6 +521,22 @@ namespace CrmOutlookAddin.Wrappers.Tests
         private class TestItem : AbstractItem
         {
             public override string Description
+            {
+                get
+                {
+                    return "Test only";
+                }
+            }
+
+            public override string DistinctFields
+            {
+                get
+                {
+                    return "Test only";
+                }
+            }
+
+            public override string OutlookId
             {
                 get
                 {

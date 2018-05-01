@@ -13,6 +13,14 @@
             this.item = item;
         }
 
+        public override string OutlookId
+        {
+            get
+            {
+                return this.item.EntryID;
+            }
+        }
+
         /// <summary>
         /// Wrappers round item properties: AllDayEvent.
         /// </summary>

@@ -7,7 +7,10 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-
+    using System.Globalization;
+    using System.Linq;
+    using System.Text;
+    using Utils;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
     public class ItemManager : IItemManager
@@ -66,8 +69,9 @@
 
         public AbstractItem GetByDistinctFields(Dictionary<string, object> fields, ItemType type)
         {
-            return this.GetByDistinctFields(this.CanonicaliseFields(fields), type);
+            return this.GetByDistinctFields(StringUtils.CanonicaliseFields(fields), type);
         }
+
 
         public AbstractItem GetByDistinctFields(string canonicalFields, ItemType type)
         {
@@ -85,7 +89,7 @@
             return result;
         }
 
-        AbstractItem IItemManager.GetByOutlookId(string outlookId, ItemType type)
+        public AbstractItem  GetByOutlookId(string outlookId, ItemType type)
         {
             AbstractItem result;
 
@@ -101,11 +105,18 @@
             return result;
         }
 
-        void IItemManager.RemoveWrapper(AbstractItem abstractWrapper)
+        public void RemoveWrapper(AbstractItem abstractWrapper)
         {
-            this.byCrmId[abstractWrapper.CrmEntryId] = null;
             this.byOutlookId[abstractWrapper.OutlookId] = null;
-            this.byDistinctFields[abstractWrapper.DistinctFields] = null;
+
+            if (!string.IsNullOrEmpty(abstractWrapper.CrmEntryId))
+            {
+                this.byCrmId[abstractWrapper.CrmEntryId] = null;
+            }
+            if (!string.IsNullOrEmpty(abstractWrapper.DistinctFields))
+            {
+                this.byDistinctFields[abstractWrapper.DistinctFields] = null;
+            }
         }
 
         private AbstractItem CreateAppointment(string outlookId, string crmId, OlMeetingStatus status)
@@ -222,9 +233,15 @@
             }
             if (legacy != null)
             {
-                result = legacy.MeetingStatus == OlMeetingStatus.olNonMeeting ?
-                    new CallItem(legacy) :
-                    new MeetingItem(legacy);
+                if (legacy.MeetingStatus == OlMeetingStatus.olNonMeeting)
+                {
+                    result = new CallItem(legacy);
+                }
+                else
+                {
+                    result = new Wrappers.MeetingItem(legacy);
+                }
+
                 this.byOutlookId[legacy.EntryID] = result;
                 if (!string.IsNullOrEmpty(crmId)) this.byCrmId[crmId] = result;
             }

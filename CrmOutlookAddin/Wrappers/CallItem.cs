@@ -17,14 +17,6 @@
             }
         }
 
-        public override string OutlookId
-        {
-            get
-            {
-                return this.item.EntryID;
-            }
-        }
-
         public override void CacheItem()
         {
             throw new NotImplementedException();

@@ -32,16 +32,10 @@
     <DefineConstants>VSTO40</DefineConstants>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <ApplicationVersion>0.0.0.0</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>days</UpdateIntervalUnits>
-    <IsWebBootstrapper>False</IsWebBootstrapper>
     <ProductName>CrmOutlookAddin</ProductName>
     <PublisherName />
     <SupportUrl />
@@ -209,6 +203,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Core\Documentation.cs" />
     <Compile Include="Core\IItemManager.cs" />
     <Compile Include="Core\ItemType.cs" />
     <Compile Include="Core\Scheduler.cs" />
@@ -220,6 +215,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Utils\RepeatingProcess.cs" />
     <Compile Include="Utils\RunState.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\ThreadSafeList.cs" />
     <Compile Include="Utils\Watchdog.cs" />
     <Compile Include="Core\ItemManager.cs" />
@@ -299,13 +295,7 @@
     <ManifestKeyFile>CrmOutlookAddin_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D2A64E0BB31BBE31E31529BE45FBA8BD702B06AE</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>CrmOutlookAddin_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <ManifestCertificateThumbprint>5933D6D2FBD8B7D99F013F49BBAC15472BA4F0D1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -329,7 +319,7 @@
     <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props'))" />
   </Target>
   <!-- remainder of this file added by simon 20180430 bump version; generate documentation -->
-    <UsingTask TaskName="BumpVersion" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+  <UsingTask TaskName="BumpVersion" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <ReleaseLevel ParameterType="System.String" Required="false" />
       <TargetFileName ParameterType="System.String" Required="true" />

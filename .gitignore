@@ -70,3 +70,5 @@ SuiteCRMAddIn/Documentation/latex/
 *.psess
 
 *.vsp
+
+CrmOutlookAddin/CrmOutlookAddin_TemporaryKey\.pfx

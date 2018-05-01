@@ -1,10 +1,23 @@
-﻿using System;
-
-namespace CrmOutlookAddin.Wrappers
+﻿namespace CrmOutlookAddin.Wrappers
 {
-    public class MeetingItem : AbstractItem
+    using System;
+    using Outlook = Microsoft.Office.Interop.Outlook;
+
+    public class MeetingItem : AbstractAppointmentItem
     {
+        public MeetingItem(Outlook.AppointmentItem item) : base(item)
+        {
+        }
+
         public override string Description
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override string DistinctFields
         {
             get
             {
