@@ -230,14 +230,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Transducers\CRMToOutlook\AbstractInboundTransducer.cs" />
-    <Compile Include="Transducers\CRMToOutlook\AbstractInboundTransducer{1}.cs" />
     <Compile Include="Transducers\CRMToOutlook\InboundCallTransducer.cs" />
     <Compile Include="Transducers\CRMToOutlook\InboundContactTransducer.cs" />
     <Compile Include="Transducers\CRMToOutlook\InboundMeetingTransducer.cs" />
     <Compile Include="Transducers\CRMToOutlook\InboundTaskTransducer.cs" />
     <Compile Include="Transducers\CRMToOutlook\InboundTransducerFactory.cs" />
     <Compile Include="Transducers\OutlookToCRM\AbstractOutboundTransducer.cs" />
-    <Compile Include="Transducers\OutlookToCRM\AbstractOutboundTransducer{1}.cs" />
     <Compile Include="Transducers\OutlookToCRM\Documentation.cs" />
     <Compile Include="Transducers\OutlookToCRM\OutboundCallTransducer.cs" />
     <Compile Include="Transducers\OutlookToCRM\OutboundContactTransducer.cs" />
