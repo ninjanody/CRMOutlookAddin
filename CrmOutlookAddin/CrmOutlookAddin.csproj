@@ -203,6 +203,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Core\AbstractItemManager.cs" />
     <Compile Include="Core\Documentation.cs" />
     <Compile Include="Core\IItemManager.cs" />
     <Compile Include="Core\ItemType.cs" />

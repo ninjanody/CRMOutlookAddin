@@ -7,7 +7,7 @@
     /// A probably-fatal exception.
     /// </summary>
     [Serializable]
-    internal class ShouldNotHappenException : Exception
+    public class ShouldNotHappenException : Exception
     {
         public ShouldNotHappenException()
         {

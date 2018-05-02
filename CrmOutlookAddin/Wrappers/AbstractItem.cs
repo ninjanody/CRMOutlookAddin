@@ -10,6 +10,15 @@ namespace CrmOutlookAddin.Wrappers
     public abstract class AbstractItem
     {
         /// <summary>
+        /// The name of the property of an Outlook item on which the id of the corresponding CRM 
+        /// item will be stored.
+        /// </summary>
+        /// <remarks>
+        /// This will be the only user property we will store on Outlook items.
+        /// </remarks>
+        public const string CrmIdPropertyName = "CRM_Id";
+
+        /// <summary>
         /// A lock that should be obtained before operations which operate on the State or the
         /// cached value.
         /// </summary>
@@ -18,7 +27,7 @@ namespace CrmOutlookAddin.Wrappers
         /// <summary>
         /// The CRM id of the object I wrap, if known.
         /// </summary>
-        public string CrmEntryId { get; set; }
+        public abstract string CrmEntryId { get; set; }
 
         /// <summary>
         /// A description of the object wrapped.
@@ -79,7 +88,6 @@ namespace CrmOutlookAddin.Wrappers
         public void SetInvalid()
         {
             this.State = States.Invalid;
-            ItemManager.Instance.RemoveWrapper(this);
         }
 
         /// <summary>

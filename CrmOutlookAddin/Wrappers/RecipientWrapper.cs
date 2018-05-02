@@ -1,6 +1,6 @@
 ﻿namespace CrmOutlookAddin.Wrappers
 {
-    using CrmOutlookAddin.Logging;
+    using Logging;
     using Microsoft.Office.Interop.Outlook;
     using System;
     using System.Collections.Generic;
@@ -23,6 +23,27 @@
         public RecipientWrapper(Recipient recipient)
         {
             this.recipient = recipient;
+        }
+
+        /// <summary>
+        /// A recipient is never stored in CRM as such, so this is probably not needed.
+        /// </summary>
+        /// <remarks>
+        /// If it is needed, we also need the module it is stored in (recipients may be
+        /// CRM `Users`, `Contacts` or `Leads`, and may possibly also be in custom
+        /// modules).
+        /// </remarks>
+        public override string CrmEntryId
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public override string Description

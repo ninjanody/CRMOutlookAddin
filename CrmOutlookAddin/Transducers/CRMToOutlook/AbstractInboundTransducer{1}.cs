@@ -1,11 +1,16 @@
 ﻿namespace CrmOutlookAddin.Transducers.CRMToOutlook
 {
+    using Core;
     using CrmOutlookAddin.Wrappers;
     using System.Collections.Generic;
 
     public abstract class AbstractInboundTransducer<Item> : AbstractInboundTransducer
         where Item : AbstractItem
     {
+        public AbstractInboundTransducer() : base() { }
+
+        public AbstractInboundTransducer(IItemManager manager) : base(manager) { }
+
         /// <summary>
         /// Attempt to parse a single item from a string assumed to be one returned from a `get_entry` call.
         /// </summary>

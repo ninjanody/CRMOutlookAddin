@@ -4,7 +4,7 @@ namespace CrmOutlookAddin.Transducers.CRMToOutlook
 {
     public class AbstractInboundTransducer
     {
-        private readonly IItemManager manager;
+        protected readonly IItemManager manager;
 
         public AbstractInboundTransducer()
         {

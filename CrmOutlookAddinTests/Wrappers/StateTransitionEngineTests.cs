@@ -5,6 +5,13 @@
     using NUnit.Framework;
     using System;
 
+    /// <summary>
+    /// Tests for the state transition engine.
+    /// </summary>
+    /// <remarks>
+    /// This is in some sense the key file for the whole project: the policy set by this file 
+    /// controls the flow of information between that addin and CRM.
+    /// </remarks>
     [TestFixture()]
     public class StateTransitionEngineTests
     {
@@ -13,161 +20,164 @@
         {
             TestItem instanceNew = new TestItem();
             /* you can go from New to Editing */
-            Assert.DoesNotThrow(() => instanceNew.SetEditing());
+            Assert.DoesNotThrow(() => instanceNew.SetEditing(), "you can go from New to Editing");
+            Assert.AreEqual(States.Editing, instanceNew.State, "after transition, instance is in state Editing");
 
             /* you can go from NewFromOutlook to Editing */
             TestItem instanceNewFromOutlook = new TestItem();
             instanceNewFromOutlook.SetNewFromOutlook();
-            Assert.DoesNotThrow(() => instanceNewFromOutlook.SetEditing());
+            Assert.DoesNotThrow(() => instanceNewFromOutlook.SetEditing(), "you can go from NewFromOutlook to Editing");
+            Assert.AreEqual(States.Editing, instanceNewFromOutlook.State, "after transition, instance is in state Editing");
 
             /* you can go from PresentAtStartup to Editing */
             TestItem instancePresentAtStartup = new TestItem();
             instancePresentAtStartup.SetPresentAtStartup();
-            Assert.DoesNotThrow(() => instancePresentAtStartup.SetEditing());
+            Assert.DoesNotThrow(() => instancePresentAtStartup.SetEditing(), "you can go from PresentAtStartup to Editing");
+            Assert.AreEqual(States.Editing, instancePresentAtStartup.State, "after transition, instance is in state Editing");
 
             /* you can go from NewFromCRM to Editing */
             TestItem instanceNewFromCRM = new TestItem();
             instanceNewFromCRM.SetNewFromCRM();
-            Assert.DoesNotThrow(() => instanceNewFromCRM.SetEditing());
+            Assert.DoesNotThrow(() => instanceNewFromCRM.SetEditing(), "you can go from NewFromCRM to Editing");
+            Assert.AreEqual(States.Editing, instanceNewFromCRM.State, "after transition, instance is in state Editing");
 
             /* you can go from Editing to Editing */
-            TestItem instanceEditing = new TestItem();
-            instanceEditing.SetEditing();
-            Assert.DoesNotThrow(() => instanceEditing.SetEditing());
+            var instanceEditing = new TestItem().StepTo(States.Editing);
+            Assert.DoesNotThrow(() => instanceEditing.SetEditing(), "you can go from Editing to Editing");
+            Assert.AreEqual(States.Editing, instanceEditing.State, "after transition, instance is in state Editing");
 
             /* you can go from Pending to Editing */
-            TestItem instancePending = new TestItem();
-            instancePending.SetNewFromOutlook();
-            instancePending.SetPending();
-            Assert.DoesNotThrow(() => instancePending.SetEditing());
+            var instancePending = new TestItem().StepTo(States.Pending);
+            Assert.DoesNotThrow(() => instancePending.SetEditing(), "you can go from Pending to Editing");
+            Assert.AreEqual(States.Editing, instancePending.State, "after transition, instance is in state Editing");
 
             /* you can go from Queued to Editing */
-            TestItem instanceQueued = new TestItem();
-            instanceQueued.SetNewFromOutlook();
-            instanceQueued.SetPending();
-            instanceQueued.SetQueued();
-            Assert.DoesNotThrow(() => instanceQueued.SetEditing());
+            var instanceQueued = new TestItem().StepTo(States.Queued);
+            Assert.DoesNotThrow(() => instanceQueued.SetEditing(), "you can go from Queued to Editing");
+            Assert.AreEqual(States.Editing, instanceQueued.State, "after transition, instance is in state Editing");
 
             /* you cannot go from Transmitted to Editing */
-            TestItem instanceTransmitted = new TestItem();
-            instanceTransmitted.SetNewFromOutlook();
-            instanceTransmitted.SetPending();
-            instanceTransmitted.SetQueued();
-            instanceTransmitted.SetTransmitted();
-            Assert.Throws<BadStateTransition>(() => instanceTransmitted.SetEditing());
+            var instanceTransmitted = new TestItem().StepTo(States.Transmitted);
+            Assert.Throws<BadStateTransition>(() => instanceTransmitted.SetEditing(), "you cannot go from Transmitted to Editing");
+            Assert.AreEqual(States.Transmitted, instanceTransmitted.State, "after transition, instance is in state Transmitted");
 
             /* you can go from Synced to Editing */
-            TestItem instanceSynced = new TestItem();
-            instanceSynced.SetNewFromOutlook();
-            instanceSynced.SetPending();
-            instanceSynced.SetQueued();
-            instanceSynced.SetTransmitted();
-            instanceSynced.SetSynced();
-            Assert.DoesNotThrow(() => instanceSynced.SetEditing());
+            var instanceSynced = new TestItem().StepTo(States.Synced);
+            Assert.DoesNotThrow(() => instanceSynced.SetEditing(), "you can go from Synced to Editing");
+            Assert.AreEqual(States.Editing, instanceSynced.State, "after transition, instance is in state Editing");
 
             /* you can go from PendingDeletion to Editing */
-            TestItem instancePendingDeletion = new TestItem();
-            instancePendingDeletion.SetNewFromOutlook();
-            instancePendingDeletion.SetPendingDeletion();
-            Assert.DoesNotThrow(() => instanceSynced.SetEditing());
+            var instancePendingDeletion = new TestItem().StepTo(States.PendingDeletion);
+            Assert.DoesNotThrow(() => instancePendingDeletion.SetEditing(), "you can go from PendingDeletion to Editing");
+            Assert.AreEqual(States.Editing, instancePendingDeletion.State, "after transition, instance is in state Editing");
         }
 
         [Test()]
         public void SetInvalidTest()
         {
             /* you can go from New to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().SetInvalid());
+            var instanceNew = new TestItem();
+            Assert.DoesNotThrow(() => instanceNew.SetInvalid(), "you can go from New to Invalid");
+            Assert.AreEqual(States.Invalid, instanceNew.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from NewFromOutlook to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.NewFromOutlook).SetInvalid());
+            /* you can go from NewFromOutlook to Invalid */
+            var instanceNewFromOutlook = new TestItem().StepTo(States.NewFromOutlook);
+            Assert.DoesNotThrow(() => instanceNewFromOutlook.SetInvalid(), "you can go from NewFromOutlook to Invalid");
+            Assert.AreEqual(States.Invalid, instanceNewFromOutlook.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from PresentAtStartup to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.PresentAtStartup).SetInvalid());
+            /* you can go from PresentAtStartup to Invalid */
+            var instancePresentAtStartup = new TestItem().StepTo(States.PresentAtStartup);
+            Assert.DoesNotThrow(() => instancePresentAtStartup.SetInvalid(), "you can go from PresentAtStartup to Invalid");
+            Assert.AreEqual(States.Invalid, instancePresentAtStartup.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from NewFromCRM to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.NewFromCRM).SetInvalid());
+            /* you can go from NewFromCRM to Invalid */
+            var instanceNewFromCRM = new TestItem().StepTo(States.NewFromCRM);
+            Assert.DoesNotThrow(() => instanceNewFromCRM.SetInvalid(), "you can go from NewFromCRM to Invalid");
+            Assert.AreEqual(States.Invalid, instanceNewFromCRM.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from Editing to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.Editing).SetInvalid());
+            /* you can go from Editing to Invalid */
+            var instanceEditing = new TestItem().StepTo(States.Editing);
+            Assert.DoesNotThrow(() => instanceEditing.SetInvalid(), "you can go from Editing to Invalid");
+            Assert.AreEqual(States.Invalid, instanceEditing.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from PresentAtStartup to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.Pending).SetInvalid());
+            /* you can go from PresentAtStartup to Invalid */
+            var instancePending = new TestItem().StepTo(States.Pending);
+            Assert.DoesNotThrow(() => instancePending.SetInvalid(), "you can go from PresentAtStartup to Invalid");
+            Assert.AreEqual(States.Invalid, instancePending.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from Queued to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.Queued).SetInvalid());
+            /* you can go from Queued to Invalid */
+            var instanceQueued = new TestItem().StepTo(States.Queued);
+            Assert.DoesNotThrow(() => instanceQueued.SetInvalid(), "you can go from Queued to Invalid");
+            Assert.AreEqual(States.Invalid, instanceQueued.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from Transmitted to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.Transmitted).SetInvalid());
+            /* you can go from Transmitted to Invalid */
+            var instanceTransmitted = new TestItem().StepTo(States.Transmitted);
+            Assert.DoesNotThrow(() => instanceTransmitted.SetInvalid(), "you can go from Transmitted to Invalid");
+            Assert.AreEqual(States.Invalid, instanceTransmitted.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from Synced to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.Synced).SetInvalid());
+            /* you can go from Synced to Invalid */
+            var instanceSynced = new TestItem().StepTo(States.Synced);
+            Assert.DoesNotThrow(() => instanceSynced.SetInvalid(), "you can go from Synced to Invalid");
+            Assert.AreEqual(States.Invalid, instanceSynced.State, "after transition, instance is in state Invalid");
 
-            /* you cannot go from PendingDeletion to Invalid */
-            Assert.DoesNotThrow(() => new TestItem().StepTo(States.PendingDeletion).SetInvalid());
+            /* you can go from PendingDeletion to Invalid */
+            var instancePendingDeletion = new TestItem().StepTo(States.PendingDeletion);
+            Assert.DoesNotThrow(() => instancePendingDeletion.SetInvalid(), "you can go from PendingDeletion to Invalid");
+            Assert.AreEqual(States.Invalid, instancePendingDeletion.State, "after transition, instance is in state Invalid");
         }
 
         [Test()]
         public void SetNewFromCRMTest()
         {
-            TestItem instanceNew = new TestItem();
             /* you can go from New to NewFromCRM */
-            Assert.DoesNotThrow(() => instanceNew.SetNewFromCRM());
+            TestItem instanceNew = new TestItem();
+            Assert.DoesNotThrow(() => instanceNew.SetNewFromCRM(), "you can go from New to NewFromCRM");
+            Assert.AreEqual(States.NewFromCRM, instanceNew.State, "after transition, instance is in state NewFromCRM");
 
             /* you cannot go from NewFromOutlook to NewFromCRM */
-            TestItem instanceNewFromOutlook = new TestItem();
-            instanceNewFromOutlook.SetNewFromOutlook();
+            var instanceNewFromOutlook = new TestItem().StepTo(States.NewFromOutlook);
             Assert.DoesNotThrow(() => instanceNewFromOutlook.SetNewFromCRM());
+            Assert.AreEqual(States.NewFromCRM, instanceNewFromOutlook.State, "after transition, instance is in state NewFromCRM");
 
             /* you cannot go from PresentAtStartup to NewFromCRM */
-            TestItem instancePresentAtStartup = new TestItem();
-            instancePresentAtStartup.SetPresentAtStartup();
-            Assert.Throws<BadStateTransition>(() => instancePresentAtStartup.SetNewFromCRM());
+            var instancePresentAtStartup = new TestItem().StepTo(States.PresentAtStartup);
+            Assert.Throws<BadStateTransition>(() => instancePresentAtStartup.SetNewFromCRM(), "you cannot go from PresentAtStartup to NewFromCRM");
+            Assert.AreEqual(States.PresentAtStartup, instancePresentAtStartup.State, "after transition, instance is in state PresentAtStartup");
 
             /* you cannot go from NewFromCRM to NewFromCRM */
-            TestItem instanceNewFromCRM = new TestItem();
-            instanceNewFromCRM.SetNewFromCRM();
-            Assert.Throws<BadStateTransition>(() => instanceNewFromCRM.SetNewFromCRM());
+            var instanceNewFromCRM = new TestItem().StepTo(States.NewFromCRM);
+            Assert.Throws<BadStateTransition>(() => instanceNewFromCRM.SetNewFromCRM(), "you cannot go from NewFromCRM to NewFromCRM");
+            Assert.AreEqual(States.NewFromCRM, instanceNewFromCRM.State, "after transition, instance is in state NewFromCRM");
 
             /* you cannot go from Editing to NewFromCRM */
-            TestItem instanceEditing = new TestItem();
-            instanceEditing.SetEditing();
-            Assert.Throws<BadStateTransition>(() => instanceEditing.SetNewFromCRM());
+            var instanceEditing = new TestItem().StepTo(States.Editing);
+            Assert.Throws<BadStateTransition>(() => instanceEditing.SetNewFromCRM(), "you cannot go from Editing to NewFromCRM");
+            Assert.AreEqual(States.Editing, instanceEditing.State, "after transition, instance is in state Editing");
 
-            /* you cannot go from PresentAtStartup to NewFromCRM */
-            TestItem instancePending = new TestItem();
-            instancePending.SetNewFromOutlook();
-            instancePending.SetPending();
-            Assert.Throws<BadStateTransition>(() => instancePending.SetNewFromCRM());
+            /* you cannot go from Pending to NewFromCRM */
+            var instancePending = new TestItem().StepTo(States.Pending);
+            Assert.Throws<BadStateTransition>(() => instancePending.SetNewFromCRM(), "you cannot go from Pending to NewFromCRM");
+            Assert.AreEqual(States.Pending, instancePending.State, "after transition, instance is in state Pending");
 
             /* you cannot go from Queued to NewFromCRM */
-            TestItem instanceQueued = new TestItem();
-            instanceQueued.SetNewFromOutlook();
-            instanceQueued.SetPending();
-            instanceQueued.SetQueued();
-            Assert.Throws<BadStateTransition>(() => instanceQueued.SetNewFromCRM());
+            var instanceQueued = new TestItem().StepTo(States.Queued);
+            Assert.Throws<BadStateTransition>(() => instanceQueued.SetNewFromCRM(), "you cannot go from Queued to NewFromCRM");
+            Assert.AreEqual(States.Queued, instanceQueued.State, "after transition, instance is in state Queued");
 
             /* you cannot go from Transmitted to NewFromCRM */
-            TestItem instanceTransmitted = new TestItem();
-            instanceTransmitted.SetNewFromOutlook();
-            instanceTransmitted.SetPending();
-            instanceTransmitted.SetQueued();
-            instanceTransmitted.SetTransmitted();
-            Assert.Throws<BadStateTransition>(() => instanceTransmitted.SetNewFromCRM());
+            var instanceTransmitted = new TestItem().StepTo(States.Transmitted);
+            Assert.Throws<BadStateTransition>(() => instanceTransmitted.SetNewFromCRM(), "you cannot go from Transmitted to NewFromCRM");
+            Assert.AreEqual(States.Transmitted, instanceTransmitted.State, "after transition, instance is in state Transmitted");
 
             /* you cannot go from Synced to NewFromCRM */
-            TestItem instanceSynced = new TestItem();
-            instanceSynced.SetNewFromOutlook();
-            instanceSynced.SetPending();
-            instanceSynced.SetQueued();
-            instanceSynced.SetTransmitted();
-            instanceSynced.SetSynced();
-            Assert.Throws<BadStateTransition>(() => instanceSynced.SetNewFromCRM());
+            var instanceSynced = new TestItem().StepTo(States.Synced);
+            Assert.Throws<BadStateTransition>(() => instanceSynced.SetNewFromCRM(), "you cannot go from Synced to NewFromCRM");
+            Assert.AreEqual(States.Synced, instanceSynced.State, "after transition, instance is in state Synced");
 
             /* you cannot go from PendingDeletion to NewFromCRM */
-            TestItem instancePendingDeletion = new TestItem();
-            instancePendingDeletion.SetNewFromOutlook();
-            instancePendingDeletion.SetPendingDeletion();
-            Assert.Throws<BadStateTransition>(() => instanceSynced.SetNewFromCRM());
+            var instancePendingDeletion = new TestItem().StepTo(States.PendingDeletion);
+            Assert.Throws<BadStateTransition>(() => instanceSynced.SetNewFromCRM(), "you cannot go from PendingDeletion to NewFromCRM");
+            Assert.AreEqual(States.PendingDeletion, instancePendingDeletion.State, "after transition, instance is in state PendingDeletion");
         }
 
         [Test()]
@@ -249,11 +259,13 @@
             TestItem instanceNewFromOutlook = new TestItem();
             instanceNewFromOutlook.SetNewFromOutlook();
             Assert.DoesNotThrow(() => instanceNewFromOutlook.SetPending());
+            Assert.AreEqual(States.Pending, instanceNewFromOutlook.State);
 
             /* you can go from PresentAtStartup to Pending */
             TestItem instancePresentAtStartup = new TestItem();
             instancePresentAtStartup.SetPresentAtStartup();
             Assert.DoesNotThrow(() => instancePresentAtStartup.SetPending());
+            Assert.AreEqual(States.Pending, instancePresentAtStartup.State);
 
             /* you cannot go from NewFromCRM to Pending */
             TestItem instanceNewFromCRM = new TestItem();
@@ -264,19 +276,21 @@
             TestItem instanceEditing = new TestItem();
             instanceEditing.SetEditing();
             Assert.DoesNotThrow(() => instanceEditing.SetPending());
+            Assert.AreEqual(States.Pending, instanceEditing.State);
 
-            /* you cannot go from PresentAtStartup to Pending */
+            /* you can go from Pending to Pending */
             TestItem instancePending = new TestItem();
             instancePending.SetNewFromOutlook();
             instancePending.SetPending();
-            Assert.DoesNotThrow(() => instancePending.SetPending());
+            Assert.DoesNotThrow(() => instancePending.SetPending(), "you can go from Pending to Pending");
+            Assert.AreEqual(States.Pending, instancePending.State);
 
             /* you cannot go from Queued to Pending */
             TestItem instanceQueued = new TestItem();
             instanceQueued.SetNewFromOutlook();
             instanceQueued.SetPending();
             instanceQueued.SetQueued();
-            Assert.Throws<BadStateTransition>(() => instanceQueued.SetPending());
+            Assert.Throws<BadStateTransition>(() => instanceQueued.SetPending(), "you cannot go from Queued to Pending");
 
             /* you can go from Transmitted to Pending */
             TestItem instanceTransmitted = new TestItem();
@@ -520,6 +534,19 @@
 
         private class TestItem : AbstractItem
         {
+            public override string CrmEntryId
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public override string Description
             {
                 get
@@ -549,7 +576,7 @@
                 /* do nothing */
             }
 
-            public AbstractItem StepTo(States target)
+            public TestItem StepTo(States target)
             {
                 if (this.State == States.New)
                 {
