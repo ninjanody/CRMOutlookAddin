@@ -123,6 +123,17 @@
             }
         }
 
+        /// <summary>
+        /// We don't synchronise recipients as such.
+        /// </summary>
+        public override bool Synchronisable
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public override void CacheItem()
         {
             throw new NotImplementedException();

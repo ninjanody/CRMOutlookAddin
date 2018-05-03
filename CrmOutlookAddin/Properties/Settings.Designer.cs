@@ -223,10 +223,9 @@ namespace CrmOutlookAddin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SyncContacts {
+        public global::CrmOutlookAddin.Core.SyncDirection.Direction SyncContacts {
             get {
-                return ((string)(this["SyncContacts"]));
+                return ((global::CrmOutlookAddin.Core.SyncDirection.Direction)(this["SyncContacts"]));
             }
             set {
                 this["SyncContacts"] = value;
@@ -268,22 +267,19 @@ namespace CrmOutlookAddin.Properties {
                 this["ShowConfirmationMessageArchive"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Error")]
-        public global::CrmOutlookAddin.Logging.LogEntryType LogLevel
-        {
-            get
-            {
-                return ((global::CrmOutlookAddin.Logging.LogEntryType)(this["LogLevel"]));
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public Logging.LogEntryType LogLevel {
+            get {
+                return ((Logging.LogEntryType)(this["LogLevel"]));
             }
-            set
-            {
+            set {
                 this["LogLevel"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
@@ -334,10 +330,9 @@ namespace CrmOutlookAddin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SyncCalls {
+        public global::CrmOutlookAddin.Core.SyncDirection.Direction SyncCalls {
             get {
-                return ((string)(this["SyncCalls"]));
+                return ((global::CrmOutlookAddin.Core.SyncDirection.Direction)(this["SyncCalls"]));
             }
             set {
                 this["SyncCalls"] = value;
@@ -346,10 +341,9 @@ namespace CrmOutlookAddin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SyncMeetings {
+        public global::CrmOutlookAddin.Core.SyncDirection.Direction SyncMeetings {
             get {
-                return ((string)(this["SyncMeetings"]));
+                return ((global::CrmOutlookAddin.Core.SyncDirection.Direction)(this["SyncMeetings"]));
             }
             set {
                 this["SyncMeetings"] = value;
@@ -358,10 +352,9 @@ namespace CrmOutlookAddin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SyncTasks {
+        public global::CrmOutlookAddin.Core.SyncDirection.Direction SyncTasks {
             get {
-                return ((string)(this["SyncTasks"]));
+                return ((global::CrmOutlookAddin.Core.SyncDirection.Direction)(this["SyncTasks"]));
             }
             set {
                 this["SyncTasks"] = value;

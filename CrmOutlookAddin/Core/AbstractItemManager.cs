@@ -1,16 +1,13 @@
 ﻿namespace CrmOutlookAddin.Core
 {
+    using Exceptions;
     using Logging;
-    using Outlook = Microsoft.Office.Interop.Outlook;
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Wrappers;
     using Utils;
-    using Exceptions;
+    using Wrappers;
+    using Outlook = Microsoft.Office.Interop.Outlook;
 
     /// <summary>
     /// The entire working guts of the ItemManager, to allow testable instances to be created.
@@ -46,6 +43,14 @@
         /// </summary>
         private Log log = Log.Instance;
 
+        public ICollection<AbstractItem> AllItems
+        {
+            get
+            {
+                return this.byOutlookId.Values;
+            }
+        }
+
         public AbstractItem GetByCrmId(string crmId, ItemType type)
         {
             AbstractItem result;
@@ -66,7 +71,6 @@
         {
             return this.GetByDistinctFields(StringUtils.CanonicaliseFields(fields), type);
         }
-
 
         public AbstractItem GetByDistinctFields(string canonicalFields, ItemType type)
         {
@@ -114,6 +118,51 @@
             }
         }
 
+        /// <summary>
+        /// Create a new item of the specified type, wrapping the Outlook item with this outlook id,
+        /// if specified, or a newly created Oulook item otherwise, and having this crm id.
+        /// </summary>
+        /// <remarks>
+        /// `virtual` in order that it may be overridden in test subclasses.
+        /// </remarks>
+        /// <param name="type">The type of item to create.</param>
+        /// <param name="outlookId">The outlook id of the item, if known, else null.</param>
+        /// <param name="crmId">The CRM id of the item, if known, else null.</param>
+        /// <returns>The item created.</returns>
+        protected virtual AbstractItem CreateItem(ItemType type, string outlookId, string crmId)
+        {
+            AbstractItem result;
+
+            switch (type)
+            {
+                case ItemType.Call:
+                    result = this.CreateCall(outlookId, crmId);
+                    break;
+
+                case ItemType.Contact:
+                    result = this.CreateContact(outlookId, crmId);
+                    break;
+
+                case ItemType.Meeting:
+                    result = this.CreateMeeting(outlookId, crmId);
+                    break;
+
+                case ItemType.Task:
+                    result = this.CreateTask(outlookId, crmId);
+                    break;
+
+                default:
+                    throw new ShouldNotHappenException($"Unknown item type '{type}'");
+            }
+
+            if (!string.IsNullOrEmpty(crmId))
+            {
+                this.byCrmId[crmId] = result;
+            }
+
+            return result;
+        }
+
         private AbstractItem CreateAppointment(string outlookId, string crmId, Outlook.OlMeetingStatus status)
         {
             AbstractItem result;
@@ -158,51 +207,6 @@
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Create a new item of the specified type, wrapping the Outlook item with this outlook id, 
-        /// if specified, or a newly created Oulook item otherwise, and having this crm id.
-        /// </summary>
-        /// <remarks>
-        /// `virtual` in order that it may be overridden in test subclasses.
-        /// </remarks>
-        /// <param name="type">The type of item to create.</param>
-        /// <param name="outlookId">The outlook id of the item, if known, else null.</param>
-        /// <param name="crmId">The CRM id of the item, if known, else null.</param>
-        /// <returns>The item created.</returns>
-        protected virtual AbstractItem CreateItem(ItemType type, string outlookId, string crmId)
-        {
-            AbstractItem result;
-
-            switch (type)
-            {
-                case ItemType.Call:
-                    result = this.CreateCall(outlookId, crmId);
-                    break;
-
-                case ItemType.Contact:
-                    result = this.CreateContact(outlookId, crmId);
-                    break;
-
-                case ItemType.Meeting:
-                    result = this.CreateMeeting(outlookId, crmId);
-                    break;
-
-                case ItemType.Task:
-                    result = this.CreateTask(outlookId, crmId);
-                    break;
-
-                default:
-                    throw new ShouldNotHappenException($"Unknown item type '{type}'");
-            }
-
-            if (!string.IsNullOrEmpty(crmId))
-            {
-                this.byCrmId[crmId] = result;
-            }
-
-            return result;
-        }
-
         private AbstractItem CreateMeeting(string outlookId, string crmId)
         {
             return this.CreateAppointment(outlookId, crmId, Outlook.OlMeetingStatus.olMeeting);
@@ -212,7 +216,6 @@
         {
             throw new NotImplementedException();
         }
-
 
         /// <summary>
         /// Find an existing appointment item in the connected Outlook instance which matches these

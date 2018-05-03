@@ -1,5 +1,6 @@
 ﻿namespace CrmOutlookAddin.Wrappers
 {
+    using Core;
     using System;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
@@ -17,6 +18,14 @@
             get
             {
                 return $"subject: '{this.Subject}'; start: '{this.Start}'";
+            }
+        }
+
+        public override bool Synchronisable
+        {
+            get
+            {
+                return SyncDirection.AllowOutbound(Properties.Settings.Default.SyncCalls);
             }
         }
 

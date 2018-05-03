@@ -1,5 +1,6 @@
 ﻿namespace CrmOutlookAddin.Wrappers
 {
+    using Core;
     using System;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
@@ -26,6 +27,14 @@
             get
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        public override bool Synchronisable
+        {
+            get
+            {
+                return SyncDirection.AllowOutbound(Properties.Settings.Default.SyncMeetings);
             }
         }
 

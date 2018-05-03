@@ -89,6 +89,21 @@
             }
         }
 
+        /// <summary>
+        /// Synchronisability of emails is a lot more complex - depends on 
+        /// configured folders, senders and receivers.
+        /// </summary>
+        /// <remarks>
+        /// TODO: implement!
+        /// </remarks>
+        public override bool Synchronisable
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public override void CacheItem()
         {
             throw new NotImplementedException();

@@ -571,6 +571,14 @@
                 }
             }
 
+            public override bool Synchronisable
+            {
+                get
+                {
+                    return true;
+                }
+            }
+
             public override void CacheItem()
             {
                 /* do nothing */

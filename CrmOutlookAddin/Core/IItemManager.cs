@@ -18,6 +18,12 @@
         AbstractItem GetByCrmId(string crmId, ItemType type);
 
         /// <summary>
+        /// All the items I hold.
+        /// </summary>
+        /// <returns>All the items I hold.</returns>
+        ICollection<AbstractItem> AllItems { get; }
+
+        /// <summary>
         /// Get the object indicated by these distinct fields from the item manager
         /// </summary>
         /// <param name="fields">The fieldnames/values</param>

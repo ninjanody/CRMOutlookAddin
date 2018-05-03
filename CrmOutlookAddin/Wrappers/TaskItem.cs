@@ -1,5 +1,6 @@
 ﻿namespace CrmOutlookAddin.Wrappers
 {
+    using Core;
     using System;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
@@ -93,6 +94,14 @@
             get
             {
                 return this.item.EntryID;
+            }
+        }
+
+        public override bool Synchronisable
+        {
+            get
+            {
+                return SyncDirection.AllowOutbound(Properties.Settings.Default.SyncTasks);
             }
         }
 

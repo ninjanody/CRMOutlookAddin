@@ -1,5 +1,6 @@
 ﻿namespace CrmOutlookAddin.Wrappers
 {
+    using Core;
     using System;
     using Outlook = Microsoft.Office.Interop.Outlook;
 
@@ -90,6 +91,18 @@
             get
             {
                 return this.item.EntryID;
+            }
+        }
+
+        /// <summary>
+        /// A contact is synchronisable only if its sensitivity is 'normal'.
+        /// </summary>
+        public override bool Synchronisable
+        {
+            get
+            {
+                return SyncDirection.AllowOutbound(Properties.Settings.Default.SyncContacts) && 
+                    this.item.Sensitivity == Outlook.OlSensitivity.olNormal;
             }
         }
 

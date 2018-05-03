@@ -53,7 +53,7 @@
     <Setting Name="AutoArchive" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="SyncContacts" Type="System.String" Scope="User">
+    <Setting Name="SyncContacts" Type="CrmOutlookAddin.Core.SyncDirection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="IsLDAPAuthentication" Type="System.Boolean" Scope="User">
@@ -80,13 +80,13 @@
     <Setting Name="NeedsUpgrade" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="SyncCalls" Type="System.String" Scope="User">
+    <Setting Name="SyncCalls" Type="CrmOutlookAddin.Core.SyncDirection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SyncMeetings" Type="System.String" Scope="User">
+    <Setting Name="SyncMeetings" Type="CrmOutlookAddin.Core.SyncDirection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SyncTasks" Type="System.String" Scope="User">
+    <Setting Name="SyncTasks" Type="CrmOutlookAddin.Core.SyncDirection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

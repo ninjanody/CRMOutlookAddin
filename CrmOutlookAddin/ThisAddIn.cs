@@ -23,6 +23,11 @@ namespace CrmOutlookAddin
             throw new NotImplementedException();
         }
 
+        internal ISession GetCRMSession()
+        {
+            throw new NotImplementedException();
+        }
+
         internal NameSpace GetOutlookSession()
         {
             return Application.Session;

@@ -55,6 +55,16 @@ namespace CrmOutlookAddin.Wrappers
         /// </summary>
         public States State { get; private set; } = States.New;
 
+        /// <summary>
+        /// Whether I am synchronisable to CRM.
+        /// </summary>
+        public abstract bool Synchronisable { get; }
+
+        /// <summary>
+        /// A lock to be held while this item is being transmitted.
+        /// </summary>
+        public readonly object TransmissionLock = new object();
+
         public abstract void CacheItem();
 
         /// <summary>
@@ -214,14 +224,21 @@ namespace CrmOutlookAddin.Wrappers
         {
             lock (this.stateLock)
             {
-                switch (this.State)
+                if (this.Synchronisable)
                 {
-                    case States.Pending:
-                        this.SetState(States.Queued);
-                        break;
+                    switch (this.State)
+                    {
+                        case States.Pending:
+                            this.SetState(States.Queued);
+                            break;
 
-                    default:
-                        throw new BadStateTransition($"{this.State} => Queued");
+                        default:
+                            throw new BadStateTransition($"{this.Description}: {this.State} => Queued");
+                    }
+                }
+                else
+                {
+                    throw new BadStateTransition($"{this.Description}: Not synchronisable, so can't set Queued.");
                 }
             }
         }

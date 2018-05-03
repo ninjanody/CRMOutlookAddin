@@ -206,8 +206,10 @@
     <Compile Include="Core\AbstractItemManager.cs" />
     <Compile Include="Core\Documentation.cs" />
     <Compile Include="Core\IItemManager.cs" />
+    <Compile Include="Core\ISession.cs" />
     <Compile Include="Core\ItemType.cs" />
     <Compile Include="Core\Scheduler.cs" />
+    <Compile Include="Core\Synchroniser.cs" />
     <Compile Include="Exceptions\Documentation.cs" />
     <Compile Include="Exceptions\ShouldNotHappenException.cs" />
     <Compile Include="Core\States.cs" />
@@ -217,6 +219,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Transducers\CRMToOutlook\Documentation.cs" />
     <Compile Include="Transducers\Documentation.cs" />
+    <Compile Include="Transducers\TransducerFactory.cs" />
     <Compile Include="Utils\Documentation.cs" />
     <Compile Include="Utils\RepeatingProcess.cs" />
     <Compile Include="Utils\RunState.cs" />
