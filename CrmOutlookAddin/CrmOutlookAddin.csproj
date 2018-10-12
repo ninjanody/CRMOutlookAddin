@@ -126,24 +126,12 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
-    <Reference Include="Clojure, Version=1.8.0.0, Culture=neutral, PublicKeyToken=cf3caecd327a2fa9, processorArchitecture=MSIL">
-      <HintPath>..\packages\Clojure.1.8.0\lib\net40\Clojure.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="clojure.data.json, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\clojure.data.json.0.2.1.0\lib\net35\clojure.data.json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Clojure.1.8.0\lib\net40\Microsoft.Dynamic.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Clojure.1.8.0\lib\net40\Microsoft.Scripting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -296,13 +284,13 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>CrmOutlookAddin_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>5933D6D2FBD8B7D99F013F49BBAC15472BA4F0D1</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>C620F8AF20770B4BC225CD1535CFB9D23FCAF07E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
