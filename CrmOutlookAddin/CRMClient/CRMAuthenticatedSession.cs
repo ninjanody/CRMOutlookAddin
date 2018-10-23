@@ -19,14 +19,27 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  */
-namespace CrmOutlookAddin.Exceptions
-{
-    using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    public class ItemNotFoundException : Exception
+namespace CrmOutlookAddin.CRMClient
+{
+    /// <summary>
+    /// A session authenticated against the CRM server directly.
+    /// </summary>
+    internal class CRMAuthenticatedSession : AbstractSession
     {
-        public ItemNotFoundException(string message) : base(message)
+        public override bool Open()
         {
+            return this.Open(Properties.Settings.Default.Host, Properties.Settings.Default.Username, Properties.Settings.Default.Password);
+        }
+
+        private bool Open(string host, string username, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 }

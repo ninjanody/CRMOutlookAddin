@@ -19,19 +19,30 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  */
-namespace CrmOutlookAddin.Core
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+using System;
 
+namespace CrmOutlookAddin.CRMClient
+{
     /// <summary>
-    /// An interface representing a session with a CRM server.
+    /// Abstract superclass for CRMAuthenticatedSession and LDAPAuthenticatedSession, q.v.
     /// </summary>
-    public interface ISession
+    internal abstract class AbstractSession : ISession
     {
-        string Transmit(string v);
+        public bool Close()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsOpen()
+        {
+            throw new NotImplementedException();
+        }
+
+        public abstract bool Open();
+
+        public string Transmit(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
