@@ -1,37 +1,49 @@
-﻿namespace CrmOutlookAddin.Core
+﻿/**
+ * Outlook integration for SuiteCRM.
+ * @package Outlook integration for SuiteCRM
+ * @copyright Simon Brooke simon@journeyman.cc
+ * @author Simon Brooke simon@journeyman.cc
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU LESSER GENERAL PUBLIC LICENCE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU LESSER GENERAL PUBLIC LICENCE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ */
+namespace CrmOutlookAddin.Core
 {
-    using CrmOutlookAddin.Logging;
-    using CrmOutlookAddin.Wrappers;
-    using Exceptions;
-    using Microsoft.Office.Interop.Outlook;
     using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text;
-    using Utils;
-    using Outlook = Microsoft.Office.Interop.Outlook;
 
     /// <summary>
-    /// The singleton Item Manager, which acts as a factory and broker for wrappers around Outlook items.
+    ///     The singleton Item Manager, which acts as a factory and broker for wrappers around Outlook items.
     /// </summary>
     public class ItemManager : AbstractItemManager
     {
         /// <summary>
-        /// My underlying instance.
+        ///     My underlying instance.
         /// </summary>
-        private static readonly Lazy<ItemManager> lazy =
+        private static readonly Lazy<ItemManager> Lazy =
             new Lazy<ItemManager>(() => new ItemManager());
 
         /// <summary>
-        /// A public accessor for my instance.
+        ///     You cannot subclass the ItemManager.
         /// </summary>
-        public static ItemManager Instance { get { return lazy.Value; } }
+        private ItemManager()
+        {
+        }
 
         /// <summary>
-        /// You cannot subclass the ItemManager.
+        ///     A public accessor for my instance.
         /// </summary>
-        private ItemManager() : base() { }
+        public static ItemManager Instance => Lazy.Value;
     }
 }

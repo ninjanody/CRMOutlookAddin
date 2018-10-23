@@ -40,7 +40,7 @@
 
             if (!string.IsNullOrEmpty(crmId))
             {
-                this.byCrmId[crmId] = result;
+                this.ByCrmId[crmId] = result;
             }
             return result;
         }
@@ -64,11 +64,11 @@
         {
             var result = new TestableCallItem();
 
-            this.byOutlookId[result.OutlookId] = result;
+            this.ByOutlookId[result.OutlookId] = result;
             if (crmId != null)
             {
                 result.CrmEntryId = crmId;
-                this.byCrmId[crmId] = result;
+                this.ByCrmId[crmId] = result;
             }
 
             return result;

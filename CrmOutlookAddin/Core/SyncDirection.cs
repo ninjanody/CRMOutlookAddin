@@ -1,7 +1,8 @@
 ﻿/**
  * Outlook integration for SuiteCRM.
  * @package Outlook integration for SuiteCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
+ * @copyright Simon Brooke simon@journeyman.cc
+ * @author Simon Brooke simon@journeyman.cc
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU LESSER GENERAL PUBLIC LICENCE as published by
@@ -17,20 +18,18 @@
  * along with this program; if not, see http://www.gnu.org/licenses
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author SalesAgility <info@salesagility.com>
  */
 
 namespace CrmOutlookAddin.Core
 {
     /// <summary>
-    /// A direction in which things may be synchronised. Directions are named
-    /// with respect to CRM.
+    ///     A direction in which things may be synchronised. Directions are named
+    ///     with respect to CRM.
     /// </summary>
     public class SyncDirection
     {
         /// <summary>
-        /// The actual directions
+        ///     The actual directions
         /// </summary>
         public enum Direction
         {
@@ -41,27 +40,27 @@ namespace CrmOutlookAddin.Core
         }
 
         /// <summary>
-        /// Does this direction allow inbound transfers to Outlook?
+        ///     Does this direction allow inbound transfers to Outlook?
         /// </summary>
         /// <param name="direction">The direction.</param>
         /// <returns>True if this direction allows inbound transfers.</returns>
         public static bool AllowInbound(Direction direction)
         {
-            return (direction == Direction.Export || direction == Direction.BiDirectional);
+            return direction == Direction.Export || direction == Direction.BiDirectional;
         }
 
         /// <summary>
-        /// Does this direction allow outbound transfers from Outlook?
+        ///     Does this direction allow outbound transfers from Outlook?
         /// </summary>
         /// <param name="direction">The direction.</param>
         /// <returns>True if this direction allows outbound transfers.</returns>
         public static bool AllowOutbound(Direction direction)
         {
-            return (direction == Direction.Import || direction == Direction.BiDirectional);
+            return direction == Direction.Import || direction == Direction.BiDirectional;
         }
 
         /// <summary>
-        /// Convert this direction into a human-readable string
+        ///     Convert this direction into a human-readable string
         /// </summary>
         /// <param name="direction">The direction.</param>
         /// <returns>The string.</returns>

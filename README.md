@@ -4,7 +4,7 @@
 
 ### What's in this repository 
 
-SuiteCRM Outlook Plug-In v 0.0.0.28
+SuiteCRM Outlook Plug-In v 0.0.0.29
 
 **NOTE** that although the number above suggests this is version 0, it is actually development work towards Version 4. This is a complete rebuild, carrying over minimal code from previous versions. When it works, it will be released as 4.0.0. It **does not** work yet; if you want a working version, you need version 3, which you can find [here](https://github.com/salesagility/SuiteCRM-Outlook-Plugin).
 

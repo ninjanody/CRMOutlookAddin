@@ -1,4 +1,25 @@
-﻿namespace CrmOutlookAddin.Core
+﻿/**
+ * Outlook integration for SuiteCRM.
+ * @package Outlook integration for SuiteCRM
+ * @copyright Simon Brooke simon@journeyman.cc
+ * @author Simon Brooke simon@journeyman.cc
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU LESSER GENERAL PUBLIC LICENCE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU LESSER GENERAL PUBLIC LICENCE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ */
+namespace CrmOutlookAddin.Core
 {
     using Exceptions;
     using Logging;
@@ -21,17 +42,17 @@
         /// <summary>
         /// A dictionary of sync states indexed by crm id, where known.
         /// </summary>
-        protected ConcurrentDictionary<string, AbstractItem> byCrmId = new ConcurrentDictionary<string, AbstractItem>();
+        protected ConcurrentDictionary<string, AbstractItem> ByCrmId = new ConcurrentDictionary<string, AbstractItem>();
 
         /// <summary>
         /// A dictionary of sync states indexed by the values of distinct fields.
         /// </summary>
-        protected ConcurrentDictionary<string, AbstractItem> byDistinctFields = new ConcurrentDictionary<string, AbstractItem>();
+        protected ConcurrentDictionary<string, AbstractItem> ByDistinctFields = new ConcurrentDictionary<string, AbstractItem>();
 
         /// <summary>
         /// A dictionary of all known sync states indexed by outlook id.
         /// </summary>
-        protected ConcurrentDictionary<string, AbstractItem> byOutlookId = new ConcurrentDictionary<string, AbstractItem>();
+        protected ConcurrentDictionary<string, AbstractItem> ByOutlookId = new ConcurrentDictionary<string, AbstractItem>();
 
         /// <summary>
         /// A lock on creating new items.
@@ -43,21 +64,15 @@
         /// </summary>
         private Log log = Log.Instance;
 
-        public ICollection<AbstractItem> AllItems
-        {
-            get
-            {
-                return this.byOutlookId.Values;
-            }
-        }
-
+        public ICollection<AbstractItem> AllItems => this.ByOutlookId.Values;
+ 
         public AbstractItem GetByCrmId(string crmId, ItemType type)
         {
             AbstractItem result;
 
             try
             {
-                result = this.byCrmId[crmId];
+                result = this.ByCrmId[crmId];
             }
             catch (KeyNotFoundException)
             {
@@ -78,7 +93,7 @@
 
             try
             {
-                result = this.byDistinctFields[canonicalFields];
+                result = this.ByDistinctFields[canonicalFields];
             }
             catch (KeyNotFoundException)
             {
@@ -94,7 +109,7 @@
 
             try
             {
-                result = this.byOutlookId[outlookId];
+                result = this.ByOutlookId[outlookId];
             }
             catch (KeyNotFoundException)
             {
@@ -106,15 +121,15 @@
 
         public void RemoveWrapper(AbstractItem abstractWrapper)
         {
-            this.byOutlookId[abstractWrapper.OutlookId] = null;
+            this.ByOutlookId[abstractWrapper.OutlookId] = null;
 
             if (!string.IsNullOrEmpty(abstractWrapper.CrmEntryId))
             {
-                this.byCrmId[abstractWrapper.CrmEntryId] = null;
+                this.ByCrmId[abstractWrapper.CrmEntryId] = null;
             }
             if (!string.IsNullOrEmpty(abstractWrapper.DistinctFields))
             {
-                this.byDistinctFields[abstractWrapper.DistinctFields] = null;
+                this.ByDistinctFields[abstractWrapper.DistinctFields] = null;
             }
         }
 
@@ -157,7 +172,7 @@
 
             if (!string.IsNullOrEmpty(crmId))
             {
-                this.byCrmId[crmId] = result;
+                this.ByCrmId[crmId] = result;
             }
 
             return result;
@@ -181,8 +196,8 @@
                     result = new CallItem(legacy);
                     result.CrmEntryId = crmId;
 
-                    this.byCrmId[crmId] = result;
-                    this.byOutlookId[legacy.EntryID] = result;
+                    this.ByCrmId[crmId] = result;
+                    this.ByOutlookId[legacy.EntryID] = result;
                 }
                 else
                 {
@@ -252,8 +267,8 @@
                     result = new Wrappers.MeetingItem(legacy);
                 }
 
-                this.byOutlookId[legacy.EntryID] = result;
-                if (!string.IsNullOrEmpty(crmId)) this.byCrmId[crmId] = result;
+                this.ByOutlookId[legacy.EntryID] = result;
+                if (!string.IsNullOrEmpty(crmId)) this.ByCrmId[crmId] = result;
             }
             else
             {
