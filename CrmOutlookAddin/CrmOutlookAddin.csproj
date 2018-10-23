@@ -192,17 +192,23 @@
   -->
   <ItemGroup>
     <Compile Include="Core\AbstractItemManager.cs" />
+    <Compile Include="CRMClient\AbstractSession.cs" />
     <Compile Include="Core\Documentation.cs" />
     <Compile Include="Core\IItemManager.cs" />
-    <Compile Include="Core\ISession.cs" />
+    <Compile Include="CRMClient\CRMAuthenticatedSession.cs" />
+    <Compile Include="CRMClient\ISession.cs" />
     <Compile Include="Core\ItemType.cs" />
     <Compile Include="Core\Scheduler.cs" />
     <Compile Include="Core\Synchroniser.cs" />
+    <Compile Include="CRMClient\LDAPAuthenticatedSession.cs" />
+    <Compile Include="CRMClient\SessionFactory.cs" />
+    <Compile Include="Exceptions\CRMException.cs" />
     <Compile Include="Exceptions\Documentation.cs" />
     <Compile Include="Exceptions\ShouldNotHappenException.cs" />
     <Compile Include="Core\States.cs" />
     <Compile Include="Core\SyncDirection.cs" />
     <Compile Include="Exceptions\ItemNotFoundException.cs" />
+    <Compile Include="Exceptions\TransportLayerException.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Transducers\CRMToOutlook\Documentation.cs" />

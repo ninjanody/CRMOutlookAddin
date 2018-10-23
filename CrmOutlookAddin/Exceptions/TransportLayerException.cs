@@ -19,13 +19,22 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace CrmOutlookAddin.Exceptions
 {
-    using System;
-
-    public class ItemNotFoundException : Exception
+    /// <summary>
+    /// An exception which wraps any exception thrown by <see cref="HttpWebRequest.GetResponse()"/>; 
+    /// essentially, an exception which means that communication with CRM failed.
+    /// </summary>
+    public class TransportLayerException : Exception
     {
-        public ItemNotFoundException(string message) : base(message)
+        public TransportLayerException(string message, Exception cause) : base(message, cause)
         {
         }
     }

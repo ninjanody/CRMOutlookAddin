@@ -19,14 +19,32 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace CrmOutlookAddin.Exceptions
 {
-    using System;
-
-    public class ItemNotFoundException : Exception
+    /// <summary>
+    /// An exception which represents an error returned by CRM.
+    /// </summary>
+    public class CRMException : Exception
     {
-        public ItemNotFoundException(string message) : base(message)
+        /// <summary>
+        /// The CRM error number
+        /// </summary>
+        public readonly int Number;
+
+        /// <summary>
+        /// Create a new instance of CRMException.
+        /// </summary>
+        /// <param name="number">The error number reported by CRM.</param>
+        /// <param name="message">The error message rerported by CRM.</param>
+        internal CRMException(int number, string message) : base(message)
         {
+            this.Number = number;
         }
     }
 }

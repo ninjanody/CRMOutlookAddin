@@ -1,6 +1,7 @@
 ﻿using CrmOutlookAddin.Core;
 using Microsoft.Office.Interop.Outlook;
 using System;
+using CrmOutlookAddin.CRMClient;
 
 namespace CrmOutlookAddin
 {

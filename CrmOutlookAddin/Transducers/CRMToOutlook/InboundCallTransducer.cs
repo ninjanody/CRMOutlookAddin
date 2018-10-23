@@ -19,7 +19,10 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  */
- namespace CrmOutlookAddin.Transducers.CRMToOutlook
+
+using CrmOutlookAddin.Exceptions;
+
+namespace CrmOutlookAddin.Transducers.CRMToOutlook
 {
     using Wrappers;
     using System;
@@ -67,10 +70,14 @@
             CallItem result = this.manager.GetByCrmId(obj.id.ToString(), ItemType.Call) as CallItem;
             DateTime modified = DateTime.ParseExact(obj.name_value_list.date_modified.value.ToString(), "yyyy-MM-dd HH:mm:ss", null);
 
+            if (result == null)
+            {
+                throw new ItemNotFoundException($"Call item {obj.id.ToString()} was not found.");
+            }
             /* if the call item is new, its LastModified will be later than start, in which case it 
              * needs to be populated. Otherwise, if the CRM item has changed more recently than the
              * Outlook item, the latter needs to be updated. */
-            if (start <= result.LastModified || modified > result.LastModified)
+            else if(start <= result.LastModified || modified > result.LastModified)
             {
                 result.Subject = obj.name_value_list.name.value.ToString();
                 result.Body = obj.name_value_list.description.value.ToString();
